@@ -188,3 +188,25 @@ footer {
 .fav-btn:hover {
   transform: scale(1.2);
 }
+
+.quality-result {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f9fafb;
+  font-size: 14px;
+}
+
+body.dark .quality-result {
+  background: #1f2937;
+}
+
+.score {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.good { color: #16a34a; }
+.warn { color: #ca8a04; }
+.bad { color: #dc2626; }
