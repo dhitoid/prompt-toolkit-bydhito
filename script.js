@@ -4,25 +4,6 @@ let favoritePrompts = JSON.parse(
   localStorage.getItem('favoritePrompts') || '[]'
 );
 
-const fields = ['role', 'task', 'context', 'output'];
-
-fields.forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  el.addEventListener('input', () => {
-    const research = document.getElementById('researchMode');
-
-    // Live update selalu jalan
-    checkPromptQuality();
-
-    // Auto reset hanya kalau TIDAK mode riset
-    if (!research.checked && el.value.trim() === '') {
-      resetQuality();
-    }
-  });
-});
-
 const promptLibraryData = [
   {
     title: 'Ringkas Teks Panjang',
@@ -49,6 +30,25 @@ const promptLibraryData = [
     output: 'Paragraf singkat'
   }
 ];
+
+const fields = ['role', 'task', 'context', 'output'];
+
+fields.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.addEventListener('input', () => {
+    const research = document.getElementById('researchMode');
+
+    // Live update selalu jalan
+    checkPromptQuality();
+
+    // Auto reset hanya kalau TIDAK mode riset
+    if (!research.checked && el.value.trim() === '') {
+      resetQuality();
+    }
+  });
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const searchInput = document.getElementById('promptSearch');
