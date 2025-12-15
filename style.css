@@ -244,3 +244,15 @@ body.dark .quality-result {
   padding-left: 18px;
   font-size: 14px;
 }
+
+.research-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.research-controls label {
+  cursor: pointer;
+}
