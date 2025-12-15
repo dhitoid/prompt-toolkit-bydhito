@@ -1,3 +1,5 @@
+let activeCategory = 'Semua';
+
 const promptLibraryData = [
   {
     title: 'Ringkas Teks Panjang',
@@ -24,6 +26,35 @@ const promptLibraryData = [
     output: 'Paragraf singkat'
   }
 ];
+
+function getCategories() {
+  const categories = promptLibraryData.map(p => p.category);
+  return ['Semua', ...new Set(categories)];
+}
+
+function renderCategoryFilter() {
+  const container = document.getElementById('categoryFilter');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  getCategories().forEach(category => {
+    const btn = document.createElement('button');
+    btn.textContent = category;
+
+    if (category === activeCategory) {
+      btn.classList.add('active');
+    }
+
+    btn.onclick = () => {
+      activeCategory = category;
+      renderCategoryFilter();
+      renderPromptLibrary();
+    };
+
+    container.appendChild(btn);
+  });
+}
 
 function buildPrompt() {
   const role = document.getElementById('role').value.trim();
@@ -74,9 +105,20 @@ toggle.addEventListener('click', () => {
 
 function renderPromptLibrary() {
   const container = document.getElementById('promptLibrary');
+  if (!container) return;
+
   container.innerHTML = '';
 
-  promptLibraryData.forEach((prompt, index) => {
+  const filtered = activeCategory === 'Semua'
+    ? promptLibraryData
+    : promptLibraryData.filter(p => p.category === activeCategory);
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="color:var(--muted)">Tidak ada prompt di kategori ini.</p>';
+    return;
+  }
+
+  filtered.forEach((prompt, index) => {
     const div = document.createElement('div');
     div.className = 'prompt-item';
     div.innerHTML = `
@@ -84,7 +126,10 @@ function renderPromptLibrary() {
       <span>${prompt.category}</span>
     `;
 
-    div.addEventListener('click', () => loadPrompt(index));
+    div.onclick = () => loadPrompt(
+      promptLibraryData.indexOf(prompt)
+    );
+
     container.appendChild(div);
   });
 }
@@ -105,6 +150,8 @@ function loadPrompt(index) {
   });
 }
 
+renderCategoryFilter();
 renderPromptLibrary();
+
 
 
