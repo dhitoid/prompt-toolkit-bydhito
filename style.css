@@ -210,3 +210,44 @@ body.dark .quality-result {
 .good { color: #16a34a; }
 .warn { color: #ca8a04; }
 .bad { color: #dc2626; }
+
+/* ==============================
+   PROMPT QUALITY PROGRESS BAR
+============================== */
+
+.quality-result {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.score-text {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.progress-wrap {
+  width: 100%;
+  height: 10px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-bar.good { background: #22c55e; }
+.progress-bar.warn { background: #f59e0b; }
+.progress-bar.bad  { background: #ef4444; }
+
+.quality-feedback {
+  padding-left: 18px;
+  font-size: 14px;
+}
