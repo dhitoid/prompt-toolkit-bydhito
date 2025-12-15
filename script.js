@@ -4,6 +4,9 @@ let favoritePrompts = JSON.parse(
   localStorage.getItem('favoritePrompts') || '[]'
 );
 
+let showLimit = 3;
+let isExpanded = false;
+
 const promptLibraryData = [
   // =====================
   // 📚 BELAJAR
@@ -108,6 +111,21 @@ const promptLibraryData = [
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  const searchInput = document.getElementById('promptSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', e => {
+      searchQuery = e.target.value.toLowerCase();
+      isExpanded = false; // AUTO COLLAPSE
+      renderPromptLibrary();
+    });
+  }
+
+  renderCategoryFilter();
+  renderPromptLibrary();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
   // =====================
   // LIVE QUALITY CHECK
   // =====================
@@ -167,13 +185,11 @@ function renderCategoryFilter() {
   getCategories().forEach(category => {
     const btn = document.createElement('button');
     btn.textContent = category;
-
-    if (category === activeCategory) {
-      btn.classList.add('active');
-    }
+    if (category === activeCategory) btn.classList.add('active');
 
     btn.onclick = () => {
       activeCategory = category;
+      isExpanded = false; // AUTO COLLAPSE
       renderCategoryFilter();
       renderPromptLibrary();
     };
@@ -298,39 +314,38 @@ function copyPrompt() {
 
 function renderPromptLibrary() {
   const container = document.getElementById('promptLibrary');
+  const toggleBtn = document.getElementById('toggleLibraryBtn');
   if (!container) return;
 
   container.innerHTML = '';
 
-  let data = promptLibraryData;
+  let data = [...promptLibraryData];
 
-  // Filter kategori
+  // FILTER CATEGORY
   if (activeCategory === 'Favorit') {
     data = data.filter((_, i) => favoritePrompts.includes(i));
   } else if (activeCategory !== 'Semua') {
     data = data.filter(p => p.category === activeCategory);
   }
 
-  // Filter search
+  // FILTER SEARCH
   if (searchQuery) {
     data = data.filter(p =>
       p.title.toLowerCase().includes(searchQuery) ||
-      p.category.toLowerCase().includes(searchQuery) ||
       p.role.toLowerCase().includes(searchQuery) ||
       p.task.toLowerCase().includes(searchQuery)
     );
   }
 
-  if (data.length === 0) {
-    container.innerHTML = `
-      <p style="color:var(--muted)">
-        Tidak ada prompt yang cocok.
-      </p>
-    `;
+  if (!data.length) {
+    container.innerHTML = `<p style="color:var(--muted)">Tidak ada prompt.</p>`;
+    if (toggleBtn) toggleBtn.style.display = 'none';
     return;
   }
 
-  data.forEach(prompt => {
+  const visibleData = isExpanded ? data : data.slice(0, showLimit);
+
+  visibleData.forEach(prompt => {
     const index = promptLibraryData.indexOf(prompt);
     const isFav = favoritePrompts.includes(index);
 
@@ -338,7 +353,7 @@ function renderPromptLibrary() {
     div.className = 'prompt-item';
 
     div.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="display:flex;justify-content:space-between;">
         <div>
           <h3>${prompt.title}</h3>
           <span>${prompt.category}</span>
@@ -347,15 +362,32 @@ function renderPromptLibrary() {
       </div>
     `;
 
-    div.querySelector('.fav-btn').onclick = (e) => {
+    div.querySelector('.fav-btn').onclick = e => {
       e.stopPropagation();
       toggleFavorite(index);
     };
 
     div.onclick = () => loadPrompt(index);
-
     container.appendChild(div);
   });
+
+  // SHOW MORE / LESS BUTTON
+  if (!toggleBtn) return;
+
+  if (data.length <= showLimit) {
+    toggleBtn.style.display = 'none';
+    return;
+  }
+
+  toggleBtn.style.display = 'inline-block';
+  toggleBtn.textContent = isExpanded
+    ? 'Tampilkan Lebih Sedikit'
+    : 'Tampilkan Lebih Banyak';
+
+  toggleBtn.onclick = () => {
+    isExpanded = !isExpanded;
+    renderPromptLibrary();
+  };
 }
 
 function toggleFavorite(index) {
