@@ -123,8 +123,9 @@ function buildPrompt() {
     prompt += 'Format Output:\n' + output;
   }
 
-  document.getElementById('result').value =
-    prompt || 'Silakan isi minimal bagian Tugas.';
+  const result = document.getElementById('result');
+if (result) result.value = prompt || 'Silakan isi minimal bagian Tugas.';
+
 }
 
 function resetQuality() {
