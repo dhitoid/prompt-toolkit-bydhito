@@ -5,14 +5,49 @@ let favoritePrompts = JSON.parse(
 );
 
 const promptLibraryData = [
+  // =====================
+  // 📚 BELAJAR
+  // =====================
   {
     title: 'Ringkas Teks Panjang',
     category: 'Belajar',
     role: 'Kamu adalah asisten yang ahli dalam merangkum teks.',
     task: 'Ringkas teks berikut menjadi poin-poin utama.',
-    context: 'Gunakan bahasa yang mudah dipahami.',
+    context: 'Gunakan bahasa yang mudah dipahami oleh pemula.',
     output: 'Bullet point singkat'
   },
+  {
+    title: 'Jelaskan Konsep Sulit',
+    category: 'Belajar',
+    role: 'Kamu adalah guru yang sabar dan komunikatif.',
+    task: 'Jelaskan konsep berikut dengan bahasa sederhana.',
+    context: 'Gunakan analogi sehari-hari.',
+    output: 'Penjelasan singkat + contoh'
+  },
+
+  // =====================
+  // 💼 KERJA
+  // =====================
+  {
+    title: 'Balas Email Profesional',
+    category: 'Kerja',
+    role: 'Kamu adalah asisten profesional.',
+    task: 'Buat balasan email yang sopan dan profesional.',
+    context: 'Gunakan bahasa formal dan jelas.',
+    output: 'Paragraf singkat'
+  },
+  {
+    title: 'Tulis Laporan Singkat',
+    category: 'Kerja',
+    role: 'Kamu adalah staf administrasi yang rapi.',
+    task: 'Buat laporan singkat berdasarkan data berikut.',
+    context: 'Gunakan bahasa formal.',
+    output: 'Paragraf + poin penting'
+  },
+
+  // =====================
+  // 📱 KONTEN & SOSMED
+  // =====================
   {
     title: 'Buat Caption Instagram',
     category: 'Konten',
@@ -22,12 +57,52 @@ const promptLibraryData = [
     output: 'Caption + emoji secukupnya'
   },
   {
-    title: 'Balas Email Profesional',
-    category: 'Kerja',
-    role: 'Kamu adalah asisten profesional.',
-    task: 'Buat balasan email yang sopan dan profesional.',
-    context: 'Gunakan bahasa formal.',
-    output: 'Paragraf singkat'
+    title: 'Ide Konten Harian',
+    category: 'Konten',
+    role: 'Kamu adalah content strategist.',
+    task: 'Buat ide konten harian berdasarkan topik berikut.',
+    context: 'Konten harus relevan dan mudah dibuat.',
+    output: 'Daftar ide (bullet point)'
+  },
+
+  // =====================
+  // 🧠 AI & PRODUKTIVITAS
+  // =====================
+  {
+    title: 'Perbaiki Prompt',
+    category: 'Produktivitas',
+    role: 'Kamu adalah prompt engineer.',
+    task: 'Perbaiki prompt berikut agar lebih jelas dan efektif.',
+    context: 'Prompt akan digunakan untuk AI.',
+    output: 'Prompt versi optimal'
+  },
+  {
+    title: 'Checklist Tugas',
+    category: 'Produktivitas',
+    role: 'Kamu adalah asisten pribadi.',
+    task: 'Ubah instruksi berikut menjadi checklist tugas.',
+    context: 'Gunakan bahasa singkat dan jelas.',
+    output: 'Checklist'
+  },
+
+  // =====================
+  // 🛒 BISNIS & SALES
+  // =====================
+  {
+    title: 'Deskripsi Produk',
+    category: 'Bisnis',
+    role: 'Kamu adalah copywriter.',
+    task: 'Buat deskripsi produk yang menarik dan persuasif.',
+    context: 'Tonjolkan manfaat utama produk.',
+    output: 'Deskripsi singkat'
+  },
+  {
+    title: 'Chat Penawaran ke Customer',
+    category: 'Bisnis',
+    role: 'Kamu adalah sales yang ramah dan persuasif.',
+    task: 'Buat pesan penawaran produk ke calon pelanggan.',
+    context: 'Gunakan bahasa santai tapi sopan.',
+    output: 'Pesan chat singkat'
   }
 ];
 
