@@ -179,5 +179,3 @@ function loadPrompt(index) {
 renderCategoryFilter();
 renderPromptLibrary();
 
-
-
