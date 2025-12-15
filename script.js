@@ -108,6 +108,67 @@ function buildPrompt() {
     prompt || 'Silakan isi minimal bagian Tugas.';
 }
 
+function checkPromptQuality() {
+  const role = document.getElementById('role').value.trim();
+  const task = document.getElementById('task').value.trim();
+  const context = document.getElementById('context').value.trim();
+  const output = document.getElementById('output').value.trim();
+
+  let score = 0;
+  let feedback = [];
+
+  // ROLE
+  if (role.length >= 10) {
+    score += 25;
+  } else {
+    feedback.push('❌ Peran AI belum jelas.');
+  }
+
+  // TASK
+  if (task.length >= 20) {
+    score += 30;
+  } else {
+    feedback.push('❌ Tugas masih terlalu singkat atau kurang jelas.');
+  }
+
+  // CONTEXT
+  if (context.length >= 10) {
+    score += 25;
+  } else {
+    feedback.push('⚠️ Konteks belum dijelaskan.');
+  }
+
+  // OUTPUT
+  if (output.length >= 5) {
+    score += 20;
+  } else {
+    feedback.push('⚠️ Format output belum spesifik.');
+  }
+
+  let label = 'bad';
+  let labelText = 'Perlu diperbaiki';
+
+  if (score >= 80) {
+    label = 'good';
+    labelText = 'Prompt Sangat Baik';
+  } else if (score >= 60) {
+    label = 'warn';
+    labelText = 'Prompt Cukup Baik';
+  }
+
+  const resultBox = document.getElementById('qualityResult');
+
+  resultBox.innerHTML = `
+    <div class="score ${label}">
+      Skor: ${score}/100 — ${labelText}
+    </div>
+    <ul>
+      ${feedback.length ? feedback.map(f => `<li>${f}</li>`).join('') : '<li>✅ Struktur prompt sudah lengkap.</li>'}
+    </ul>
+  `;
+}
+
+
 function copyPrompt() {
   const textarea = document.getElementById('result');
   textarea.select();
