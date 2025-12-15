@@ -172,15 +172,19 @@ footer {
   color: var(--text);
 }
 
+.prompt-item {
+  position: relative;
+}
+
 .fav-btn {
-  background: transparent;
-  border: none;
-  font-size: 18px;
+  background: none !important;
+  border: none !important;
+  font-size: 20px;
   cursor: pointer;
-  line-height: 1;
+  color: #f59e0b; /* warna kuning */
+  padding: 0;
 }
 
 .fav-btn:hover {
   transform: scale(1.2);
 }
-
