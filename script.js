@@ -213,4 +213,3 @@ function loadPrompt(index) {
     block: 'start'
   });
 }
-
