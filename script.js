@@ -28,13 +28,25 @@ const promptLibraryData = [
   }
 ];
 
-const searchInput = document.getElementById('promptSearch');
-if (searchInput) {
-  searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value.toLowerCase();
-    renderPromptLibrary();
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.getElementById('promptSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase();
+      renderPromptLibrary();
+    });
+  }
+
+  const toggle = document.getElementById('themeToggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  }
+
+  renderCategoryFilter();
+  renderPromptLibrary();
+});
 
 function getCategories() {
   const categories = promptLibraryData.map(p => p.category);
@@ -106,12 +118,6 @@ function copyPrompt() {
   }, 2000);
 }
 
-// Dark / Light mode
-const toggle = document.getElementById('themeToggle');
-toggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
-});
-
 function renderPromptLibrary() {
   const container = document.getElementById('promptLibrary');
   if (!container) return;
@@ -175,7 +181,4 @@ function loadPrompt(index) {
     block: 'start'
   });
 }
-
-renderCategoryFilter();
-renderPromptLibrary();
 
