@@ -154,41 +154,30 @@ function checkPromptQuality() {
   const task = document.getElementById('task').value.trim();
   const context = document.getElementById('context').value.trim();
   const output = document.getElementById('output').value.trim();
+
   const resultBox = document.getElementById('qualityResult');
   if (!resultBox) return;
+
+  const scoreText = resultBox.querySelector('.score-text');
+  const progressBar = document.getElementById('qualityBar');
+  const feedbackList = resultBox.querySelector('.quality-feedback');
 
   resultBox.style.display = 'block';
 
   let score = 0;
   let feedback = [];
 
-  // ROLE
-  if (role.length >= 10) {
-    score += 25;
-  } else {
-    feedback.push('❌ Peran AI belum jelas.');
-  }
+  if (role.length >= 10) score += 25;
+  else feedback.push('❌ Peran AI belum jelas.');
 
-  // TASK
-  if (task.length >= 20) {
-    score += 30;
-  } else {
-    feedback.push('❌ Tugas masih terlalu singkat atau kurang jelas.');
-  }
+  if (task.length >= 20) score += 30;
+  else feedback.push('❌ Tugas masih terlalu singkat.');
 
-  // CONTEXT
-  if (context.length >= 10) {
-    score += 25;
-  } else {
-    feedback.push('⚠️ Konteks belum dijelaskan.');
-  }
+  if (context.length >= 10) score += 25;
+  else feedback.push('⚠️ Konteks belum dijelaskan.');
 
-  // OUTPUT
-  if (output.length >= 5) {
-    score += 20;
-  } else {
-    feedback.push('⚠️ Format output belum spesifik.');
-  }
+  if (output.length >= 5) score += 20;
+  else feedback.push('⚠️ Format output belum spesifik.');
 
   let label = 'bad';
   let labelText = 'Perlu diperbaiki';
@@ -201,19 +190,10 @@ function checkPromptQuality() {
     labelText = 'Prompt Cukup Baik';
   }
 
-  const resultBox = document.getElementById('qualityResult');
-  const scoreText = resultBox.querySelector('.score-text');
-  const progressBar = document.getElementById('qualityBar');
-  const feedbackList = resultBox.querySelector('.quality-feedback');
-
-  // TEXT
   scoreText.textContent = `Skor: ${score}/100 — ${labelText}`;
-
-  // PROGRESS BAR
   progressBar.style.width = score + '%';
   progressBar.className = `progress-bar ${label}`;
 
-  // FEEDBACK
   feedbackList.innerHTML = feedback.length
     ? feedback.map(f => `<li>${f}</li>`).join('')
     : '<li>✅ Struktur prompt sudah lengkap.</li>';
