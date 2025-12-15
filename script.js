@@ -1,5 +1,8 @@
 let activeCategory = 'Semua';
 let searchQuery = '';
+let favoritePrompts = JSON.parse(
+  localStorage.getItem('favoritePrompts') || '[]'
+);
 
 const promptLibraryData = [
   {
@@ -50,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getCategories() {
   const categories = promptLibraryData.map(p => p.category);
-  return ['Semua', ...new Set(categories)];
+  return ['Semua', 'Favorit', ...new Set(categories)];
 }
 
 function renderCategoryFilter() {
@@ -127,7 +130,9 @@ function renderPromptLibrary() {
   let data = promptLibraryData;
 
   // Filter kategori
-  if (activeCategory !== 'Semua') {
+  if (activeCategory === 'Favorit') {
+    data = data.filter((_, i) => favoritePrompts.includes(i));
+  } else if (activeCategory !== 'Semua') {
     data = data.filter(p => p.category === activeCategory);
   }
 
@@ -151,19 +156,46 @@ function renderPromptLibrary() {
   }
 
   data.forEach(prompt => {
+    const index = promptLibraryData.indexOf(prompt);
+    const isFav = favoritePrompts.includes(index);
+
     const div = document.createElement('div');
     div.className = 'prompt-item';
+
     div.innerHTML = `
-      <h3>${prompt.title}</h3>
-      <span>${prompt.category}</span>
+      <div style="display:flex;justify-content:space-between;align-items:start;">
+        <div>
+          <h3>${prompt.title}</h3>
+          <span>${prompt.category}</span>
+        </div>
+        <button class="fav-btn">${isFav ? '⭐' : '☆'}</button>
+      </div>
     `;
 
-    div.onclick = () => loadPrompt(
-      promptLibraryData.indexOf(prompt)
-    );
+    div.querySelector('.fav-btn').onclick = (e) => {
+      e.stopPropagation();
+      toggleFavorite(index);
+    };
+
+    div.onclick = () => loadPrompt(index);
 
     container.appendChild(div);
   });
+}
+
+function toggleFavorite(index) {
+  if (favoritePrompts.includes(index)) {
+    favoritePrompts = favoritePrompts.filter(i => i !== index);
+  } else {
+    favoritePrompts.push(index);
+  }
+
+  localStorage.setItem(
+    'favoritePrompts',
+    JSON.stringify(favoritePrompts)
+  );
+
+  renderPromptLibrary();
 }
 
 function loadPrompt(index) {
