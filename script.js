@@ -1,3 +1,30 @@
+const promptLibraryData = [
+  {
+    title: 'Ringkas Teks Panjang',
+    category: 'Belajar',
+    role: 'Kamu adalah asisten yang ahli dalam merangkum teks.',
+    task: 'Ringkas teks berikut menjadi poin-poin utama.',
+    context: 'Gunakan bahasa yang mudah dipahami.',
+    output: 'Bullet point singkat'
+  },
+  {
+    title: 'Buat Caption Instagram',
+    category: 'Konten',
+    role: 'Kamu adalah social media specialist.',
+    task: 'Buat caption Instagram yang menarik berdasarkan deskripsi berikut.',
+    context: 'Target audiens usia 18–35 tahun.',
+    output: 'Caption + emoji secukupnya'
+  },
+  {
+    title: 'Balas Email Profesional',
+    category: 'Kerja',
+    role: 'Kamu adalah asisten profesional.',
+    task: 'Buat balasan email yang sopan dan profesional.',
+    context: 'Gunakan bahasa formal.',
+    output: 'Paragraf singkat'
+  }
+];
+
 function buildPrompt() {
   const role = document.getElementById('role').value.trim();
   const task = document.getElementById('task').value.trim();
