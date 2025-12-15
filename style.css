@@ -189,18 +189,6 @@ footer {
   transform: scale(1.2);
 }
 
-.quality-result {
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #f9fafb;
-  font-size: 14px;
-}
-
-body.dark .quality-result {
-  background: #1f2937;
-}
-
 .score {
   font-size: 22px;
   font-weight: bold;
@@ -214,12 +202,16 @@ body.dark .quality-result {
 /* ==============================
    PROMPT QUALITY PROGRESS BAR
 ============================== */
-
 .quality-result {
   margin-top: 16px;
   padding: 16px;
   border-radius: 12px;
-  background: var(--card);
+  background: #f9fafb; /* PAKAI FIXED COLOR */
+  font-size: 14px;
+}
+
+body.dark .quality-result {
+  background: #1f2937;
 }
 
 .score-text {
@@ -239,6 +231,7 @@ body.dark .quality-result {
 .progress-bar {
   height: 100%;
   width: 0%;
+  background: #ef4444; /* DEFAULT */
   border-radius: 999px;
   transition: width 0.4s ease;
 }
