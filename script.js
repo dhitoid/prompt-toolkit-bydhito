@@ -4,6 +4,25 @@ let favoritePrompts = JSON.parse(
   localStorage.getItem('favoritePrompts') || '[]'
 );
 
+const fields = ['role', 'task', 'context', 'output'];
+
+fields.forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.addEventListener('input', () => {
+    const research = document.getElementById('researchMode');
+
+    // Live update selalu jalan
+    checkPromptQuality();
+
+    // Auto reset hanya kalau TIDAK mode riset
+    if (!research.checked && el.value.trim() === '') {
+      resetQuality();
+    }
+  });
+});
+
 const promptLibraryData = [
   {
     title: 'Ringkas Teks Panjang',
@@ -108,11 +127,37 @@ function buildPrompt() {
     prompt || 'Silakan isi minimal bagian Tugas.';
 }
 
+function resetQuality() {
+  const bar = document.getElementById('qualityBar');
+  const text = document.querySelector('.score-text');
+  const list = document.querySelector('.quality-feedback');
+
+  if (!bar || !text || !list) return;
+
+  bar.style.width = '0%';
+  bar.className = 'progress-bar';
+  text.textContent = '';
+  list.innerHTML = '';
+}
+
+function resetPrompt() {
+  ['role', 'task', 'context', 'output'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  resetQuality();
+}
+
 function checkPromptQuality() {
   const role = document.getElementById('role').value.trim();
   const task = document.getElementById('task').value.trim();
   const context = document.getElementById('context').value.trim();
   const output = document.getElementById('output').value.trim();
+  const resultBox = document.getElementById('qualityResult');
+  if (!resultBox) return;
+
+  resultBox.style.display = 'block';
 
   let score = 0;
   let feedback = [];
