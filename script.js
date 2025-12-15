@@ -1,4 +1,5 @@
 let activeCategory = 'Semua';
+let searchQuery = '';
 
 const promptLibraryData = [
   {
@@ -26,6 +27,14 @@ const promptLibraryData = [
     output: 'Paragraf singkat'
   }
 ];
+
+const searchInput = document.getElementById('promptSearch');
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase();
+    renderPromptLibrary();
+  });
+}
 
 function getCategories() {
   const categories = promptLibraryData.map(p => p.category);
@@ -109,16 +118,33 @@ function renderPromptLibrary() {
 
   container.innerHTML = '';
 
-  const filtered = activeCategory === 'Semua'
-    ? promptLibraryData
-    : promptLibraryData.filter(p => p.category === activeCategory);
+  let data = promptLibraryData;
 
-  if (filtered.length === 0) {
-    container.innerHTML = '<p style="color:var(--muted)">Tidak ada prompt di kategori ini.</p>';
+  // Filter kategori
+  if (activeCategory !== 'Semua') {
+    data = data.filter(p => p.category === activeCategory);
+  }
+
+  // Filter search
+  if (searchQuery) {
+    data = data.filter(p =>
+      p.title.toLowerCase().includes(searchQuery) ||
+      p.category.toLowerCase().includes(searchQuery) ||
+      p.role.toLowerCase().includes(searchQuery) ||
+      p.task.toLowerCase().includes(searchQuery)
+    );
+  }
+
+  if (data.length === 0) {
+    container.innerHTML = `
+      <p style="color:var(--muted)">
+        Tidak ada prompt yang cocok.
+      </p>
+    `;
     return;
   }
 
-  filtered.forEach((prompt, index) => {
+  data.forEach(prompt => {
     const div = document.createElement('div');
     div.className = 'prompt-item';
     div.innerHTML = `
