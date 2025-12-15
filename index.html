@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prompt Toolkit — Bikin Prompt AI Lebih Rapi</title>
+<meta name="description" content="Prompt Toolkit membantu kamu menyusun prompt AI yang jelas, rapi, dan efektif tanpa harus jago AI. Gratis & mudah digunakan.">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    🧠 <strong>Prompt Toolkit</strong>
+  </div>
+  <button id="themeToggle" aria-label="Toggle theme">🌙</button>
+</header>
+
+<section class="hero">
+  <h1>Bikin Prompt AI Lebih Rapi & Efektif</h1>
+  <p>
+    Susun prompt dengan struktur yang benar supaya hasil AI lebih sesuai
+    tanpa perlu jago AI.
+  </p>
+</section>
+
+<main>
+
+  <!-- PROMPT BUILDER -->
+  <section class="card">
+    <h2>Prompt Builder</h2>
+
+    <label>Peran AI</label>
+    <input id="role" placeholder="Contoh: Kamu adalah seorang penulis profesional">
+
+    <label>Tugas</label>
+    <textarea id="task" placeholder="Apa yang ingin AI kerjakan? Jelaskan dengan jelas."></textarea>
+
+    <label>Konteks (Opsional)</label>
+    <textarea id="context" placeholder="Target audiens, latar belakang, batasan, dll."></textarea>
+
+    <label>Format Output</label>
+    <input id="output" placeholder="Contoh: Bullet point, tabel, langkah-langkah">
+
+    <button onclick="buildPrompt()">Buat Prompt</button>
+  </section>
+
+  <!-- HASIL -->
+  <section class="card">
+    <h2>Hasil Prompt</h2>
+    <textarea id="result" readonly placeholder="Prompt akan muncul di sini..."></textarea>
+
+    <div class="actions">
+      <button onclick="copyPrompt()">📋 Salin Prompt</button>
+      <span id="copyStatus"></span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>
+    Prompt Toolkit • AI-Adjacent Tool  
+    <br>
+    Bantu AI memahami kamu dengan lebih baik.
+  </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
 
