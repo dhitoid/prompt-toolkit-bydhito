@@ -45,3 +45,39 @@ toggle.addEventListener('click', () => {
   document.body.classList.toggle('dark');
 });
 
+function renderPromptLibrary() {
+  const container = document.getElementById('promptLibrary');
+  container.innerHTML = '';
+
+  promptLibraryData.forEach((prompt, index) => {
+    const div = document.createElement('div');
+    div.className = 'prompt-item';
+    div.innerHTML = `
+      <h3>${prompt.title}</h3>
+      <span>${prompt.category}</span>
+    `;
+
+    div.addEventListener('click', () => loadPrompt(index));
+    container.appendChild(div);
+  });
+}
+
+function loadPrompt(index) {
+  const prompt = promptLibraryData[index];
+
+  document.getElementById('role').value = prompt.role;
+  document.getElementById('task').value = prompt.task;
+  document.getElementById('context').value = prompt.context;
+  document.getElementById('output').value = prompt.output;
+
+  buildPrompt();
+
+  document.getElementById('role').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+
+renderPromptLibrary();
+
+
