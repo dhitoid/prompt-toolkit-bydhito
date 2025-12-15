@@ -106,34 +106,42 @@ const promptLibraryData = [
   }
 ];
 
-const fields = ['role', 'task', 'context', 'output'];
-
-fields.forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-
-  el.addEventListener('input', () => {
-    const research = document.getElementById('researchMode');
-
-    // Live update selalu jalan
-    checkPromptQuality();
-
-    // Auto reset hanya kalau TIDAK mode riset
-    if (!research.checked && el.value.trim() === '') {
-      resetQuality();
-    }
-  });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
+
+  // =====================
+  // LIVE QUALITY CHECK
+  // =====================
+  const fields = ['role', 'task', 'context', 'output'];
+
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    el.addEventListener('input', () => {
+      const research = document.getElementById('researchMode');
+
+      checkPromptQuality();
+
+      if (research && !research.checked && el.value.trim() === '') {
+        resetQuality();
+      }
+    });
+  });
+
+  // =====================
+  // SEARCH
+  // =====================
   const searchInput = document.getElementById('promptSearch');
   if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', e => {
       searchQuery = e.target.value.toLowerCase();
       renderPromptLibrary();
     });
   }
 
+  // =====================
+  // THEME TOGGLE
+  // =====================
   const toggle = document.getElementById('themeToggle');
   if (toggle) {
     toggle.addEventListener('click', () => {
