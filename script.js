@@ -157,17 +157,22 @@ function checkPromptQuality() {
   }
 
   const resultBox = document.getElementById('qualityResult');
+  const scoreText = resultBox.querySelector('.score-text');
+  const progressBar = document.getElementById('qualityBar');
+  const feedbackList = resultBox.querySelector('.quality-feedback');
 
-  resultBox.innerHTML = `
-    <div class="score ${label}">
-      Skor: ${score}/100 — ${labelText}
-    </div>
-    <ul>
-      ${feedback.length ? feedback.map(f => `<li>${f}</li>`).join('') : '<li>✅ Struktur prompt sudah lengkap.</li>'}
-    </ul>
-  `;
+  // TEXT
+  scoreText.textContent = `Skor: ${score}/100 — ${labelText}`;
+
+  // PROGRESS BAR
+  progressBar.style.width = score + '%';
+  progressBar.className = `progress-bar ${label}`;
+
+  // FEEDBACK
+  feedbackList.innerHTML = feedback.length
+    ? feedback.map(f => `<li>${f}</li>`).join('')
+    : '<li>✅ Struktur prompt sudah lengkap.</li>';
 }
-
 
 function copyPrompt() {
   const textarea = document.getElementById('result');
